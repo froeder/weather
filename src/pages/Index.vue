@@ -1,53 +1,56 @@
 <template>
-  <q-page class="bg-grey-3">
+  <q-page class="fundo">
     <q-card>
       <input type="search" id="address-input" placeholder="Digite a sua cidade" />
     </q-card>
-
-    <q-card class="shadow-10 card-temp" v-if="weather"
-      style="
-        margin:20px ;
-        border-radius:10px;
-        background-image: linear-gradient(to bottom right, #00e6c7, #21d3ff);"
-    >
-
-      <q-card-section>
-        <div class="text-h6 text-center text-white text-weight-light">{{weather.name}}</div>
-        <div style="margin-top:15px" class="text-h2 text-center">
-        {{weather.main.temp}}  <span style="font-size:.5em ; marginBottom:20px;paddingBotto:30px">ºc</span>
-
-        </div>
-        <div class="text-center text-h6 text-capitalize">
-          {{weather.weather[0].description}}
+    <q-card v-if="weather && weather.main.temp >= 30" class="card-principal-hot shadow-10">
+      <q-card-section class="text-white ">
+        <div  class="text-center">
+          <span class="text-h6 text-weight-light">{{weather.name}}, </span><small>{{state}}</small>
         </div>
       </q-card-section>
+      <q-card-section class="row">
+        <div class="col-8">
+          <div class="row">
+            <div class="col-9 text-right"><span class="text-white ; text-h1 ;text-right">{{parseInt(weather.main.temp)}}</span></div>
+            <div class="col-2 text-h4 text-white">ºc</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="row text-white">
+            <div class="col-12 text-weight-light">Mínima</div>
+            <div class="col-12 ">{{parseInt(weather.main.temp_min)}}<small>ºc</small> </div>
+            <div class="col-12 text-weight-light">Máxima</div>
+            <div class="col-12 ">{{parseInt(weather.main.temp_max)}}<small>ºc</small> </div>
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section class="text-center text-white text-weight-light text-h6 text-capitalize">{{weather.weather[0].description}}</q-card-section>
     </q-card>
-
-    <div v-if="weather" class="q-pa-md">
-       <div class="row q-col-gutter-x-xs">
-        <q-card class="col-6 text-center"
-          style="background-image:linear-gradient(to bottom right, #2036c7, #36ffd7)"
-        >
-          <q-card-section>
-            <div class="text-weight-light">Mínima</div>
-            <div class="text-h5">{{weather.main.temp_min}}<span style="font-size:.8em">ºc</span></div>
-          </q-card-section>
-        </q-card>
-        <q-card class="col-6 text-center"
-          style="background-image:linear-gradient(to bottom right, #ff5454, #ffdd00)">
-          <q-card-section>
-            <div class="text-weight-light">Máxima</div>
-            <div class="text-h5">{{weather.main.temp_max}}<span style="font-size:.8em">ºc</span></div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
-
-
-
-
-
-
+    <q-card v-if="weather && weather.main.temp < 30" class="card-principal-cold shadow-10">
+      <q-card-section class="text-white ">
+        <div  class="text-center">
+          <span class="text-h6 text-weight-light">{{weather.name}}, </span><small>{{state}}</small>
+        </div>
+      </q-card-section>
+      <q-card-section class="row">
+        <div class="col-8">
+          <div class="row">
+            <div class="col-9 text-right"><span class="text-white ; text-h1 ;text-right">{{parseInt(weather.main.temp)}}</span></div>
+            <div class="col-2 text-h4 text-white">ºc</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="row text-white">
+            <div class="col-12 text-weight-light">Mínima</div>
+            <div class="col-12 ">{{parseInt(weather.main.temp_min)}}<small>ºc</small> </div>
+            <div class="col-12 text-weight-light">Máxima</div>
+            <div class="col-12 ">{{parseInt(weather.main.temp_max)}}<small>ºc</small> </div>
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section class="text-center text-white text-weight-light text-h6 text-capitalize">{{weather.weather[0].description}}</q-card-section>
+    </q-card>
   </q-page>
 </template>
 
@@ -59,7 +62,8 @@ export default {
   name: 'PageIndex',
   data() {
     return {
-      weather: null
+      weather: null,
+      state: null,
     }
   },
   methods: {
@@ -82,8 +86,29 @@ export default {
     });
 
     placesAutocomplete.on('change', function(e) {
-      self.getWeather(e.suggestion.latlng) ;
+      self.getWeather(e.suggestion.latlng)
+      console.log('SUGESTION')
+      self.state = e.suggestion.administrative
     });
   }
 }
 </script>
+
+<style lang="stylus">
+  .fundo{
+    background-image: linear-gradient(to bottom right, grey, #dbdbdb)
+  }
+  .card-principal-hot{
+    border-radius: 15px  ;
+    margin:20px ;
+    padding: 10px ;
+    background-color:rgba(255,84,84,0.7)
+  }
+  .card-principal-cold{
+    border-radius: 15px  ;
+    margin:20px ;
+    padding: 10px ;
+    background-color:rgba(57,214,217,0.7)
+  }
+
+</style>
