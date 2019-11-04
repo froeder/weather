@@ -51,15 +51,15 @@
       </q-card-section>
       <q-card-section class="text-center text-white text-weight-light text-h6 text-capitalize">{{weather.weather[0].description}}</q-card-section>
     </q-card>
-    <div v-if="weather" style="margin-top:20px" class="q-pa-md">
+    <div v-if="weather" style="margin-top:50px" class="q-pa-md">
         <div class="row q-col-gutter-x-xs q-col-gutter-y-lg">
-          <q-card  class="col-4 bg-teal-5">
+          <q-card  class="col-4 bg-green-3">
               <q-card-section>
                 <div class="text-weight-light text-white text-center">Umidade</div>
                 <div class="text-white text-h4 text-center">{{weather.main.humidity}}%</div>
               </q-card-section>
           </q-card>
-          <q-card class="col-4 bg-lime-5">
+          <q-card class="col-4 bg-green-4">
               <q-card-section>
                 <div class="text-weight-light text-white text-center">Pressão Atmosférica</div>
                 <div class="text-white  text-center">
@@ -67,7 +67,7 @@
                 </div>
               </q-card-section>
           </q-card>
-          <q-card  class="col-4 bg-cyan-5">
+          <q-card  class="col-4 bg-green-5">
               <q-card-section>
                 <div class="text-weight-light text-white text-center">Ventos</div>
                 <div class="text-white  text-center">
